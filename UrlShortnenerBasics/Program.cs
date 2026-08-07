@@ -39,3 +39,18 @@ bool isValidSubdomain(string linkSubdomain)
 {
     return linkSubdomain.Length > 0 && linkSubdomain.Length <= MaximumSubdomainLength;
 }
+
+
+var link = new Link (
+    Guid.NewGuid(),
+    "docs",
+    "http://github.com"
+);
+
+Console.WriteLine($"Subdomain: {link.Subdomain}");
+Console.WriteLine($"Destinatination: {link.DestinationUrl}");
+Console.WriteLine($"Short URL: {link.GetShortUrl()}");
+
+bool valid = Link.IsValidUrl(link.DestinationUrl);
+
+Console.WriteLine($"Valid URL: {valid}");
