@@ -11,7 +11,7 @@ var app = builder.Build();
 //CONTROLLER ROUTES
 app.MapControllers();
 
-// FIXED ROUTE
+// FIXED ROUTES
 app.MapGet("/",() => "URL Shortener API is running");
 
 
