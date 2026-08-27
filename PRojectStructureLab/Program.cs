@@ -16,12 +16,7 @@ app.MapGet("/",() => "URL Shortener API is running");
 
 
 //ANOTHER FIXED ROUTE
-app.MapGet("/analytics",() => "URL Shortner Analytics");
+app.MapGet("/analytics",() => "Analytics endpoint");
 
-//DYNAMIC ROUTE
-app.MapGet("/links/{subdomain}",(string subdomain) => $"Looking up destination for : {subdomain}");
-
-//SAME PATH DIFFERENT HTTP METHOD
-app.MapPost("/links",() => "Creating a new short link");
 
 app.Run();
