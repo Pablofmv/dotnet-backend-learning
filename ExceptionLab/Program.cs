@@ -34,4 +34,5 @@ static string? FindDestination(string subdomain, Dictionary<string, string> link
     }
 
     return null;
+    
 }
