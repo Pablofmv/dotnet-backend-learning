@@ -23,6 +23,7 @@ public class LinksController : ControllerBase
             DestinationUrl = "https://github.com",
             IncludeAnalytics = IncludeAnalytics
         });
+        
 
 
     }
