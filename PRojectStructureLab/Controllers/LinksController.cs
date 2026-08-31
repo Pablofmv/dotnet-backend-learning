@@ -8,18 +8,55 @@ namespace ProjectStructureLab.Controllers;
 public class LinksController : ControllerBase
 {
     [HttpGet("{subdomain}")]
-    public string GetLink(
+    public IActionResult GetLink(
         [FromRoute] string subdomain,
         [FromBody] bool IncludeAnalytics = false)
     {
-        return $"Looking up: {subdomain}, Include Analytics : {IncludeAnalytics}";
+        
+        if (subdomain != "git")
+        {
+            return NotFound();
+        }
+
+        return Ok(new{
+            Subdomain = "git",
+            DestinationUrl = "https://github.com",
+            IncludeAnalytics = IncludeAnalytics
+        });
+
+
     }
 
+
     [HttpPost]
-    public string CreateLink(
+    public IActionResult CreateLink(
         [FromBody] CreateLinkRequest request
     )
     {
-        return $"Creating {request.Subdomain} -> {request.DestinationUrl}";
+        if (string.IsNullOrWhiteSpace(request.Subdomain) ||
+        string.IsNullOrWhiteSpace(request.DestinationUrl))
+        {
+            return BadRequest();
+        }
+
+        return CreatedAtAction(
+            nameof(GetLink),
+            new{ subdomain = request.Subdomain },
+            request
+        );
     }
+
+
+    [HttpGet("{subdomain}/redirect")]
+    public IActionResult RedirectLink([FromRoute] string subdomain)
+    {
+        if (subdomain != "git")
+        {
+            return NotFound();
+        }
+
+        return Redirect("https://github.com");
+    }
+
+
 }
