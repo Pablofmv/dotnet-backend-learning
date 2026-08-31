@@ -23,11 +23,7 @@ public class LinksController : ControllerBase
             DestinationUrl = "https://github.com",
             IncludeAnalytics = IncludeAnalytics
         });
-        
-
-
     }
-
 
     [HttpPost]
     public IActionResult CreateLink(
@@ -58,6 +54,5 @@ public class LinksController : ControllerBase
 
         return Redirect("https://github.com");
     }
-
 
 }
