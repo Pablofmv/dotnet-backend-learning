@@ -52,6 +52,8 @@ public class LinksController : ControllerBase
             return NotFound();
         }
 
+        Console.Writeline("Completed");
+
         return Redirect("https://github.com");
     }
 
