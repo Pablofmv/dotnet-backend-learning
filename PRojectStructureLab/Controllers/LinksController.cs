@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ProjectStructureLab.Models;
+using ProjectStructureLab.Services;
 
 namespace ProjectStructureLab.Controllers;
 
@@ -7,20 +8,30 @@ namespace ProjectStructureLab.Controllers;
 [Route("links")]
 public class LinksController : ControllerBase
 {
+
+    private readonly ILinkService _linkService;
+
+    public LinksController(ILinkService linkService)
+    {
+        _linkService = linkService;
+    }
+
     [HttpGet("{subdomain}")]
     public IActionResult GetLink(
         [FromRoute] string subdomain,
         [FromBody] bool IncludeAnalytics = false)
     {
         
-        if (subdomain != "git")
+        var destinationUrl = _linkService.GetDestination(subdomain);
+
+        if (destinationUrl is null)
         {
             return NotFound();
         }
 
         return Ok(new{
-            Subdomain = "git",
-            DestinationUrl = "https://github.com",
+            Subdomain = subdomain,
+            DestinationUrl = destinationUrl,
             IncludeAnalytics = IncludeAnalytics
         });
     }
@@ -47,14 +58,15 @@ public class LinksController : ControllerBase
     [HttpGet("{subdomain}/redirect")]
     public IActionResult RedirectLink([FromRoute] string subdomain)
     {
-        if (subdomain != "git")
+
+        var destinationUrl = _linkService.GetDestination(subdomain);
+
+        if (destinationUrl is null)
         {
             return NotFound();
         }
 
-        Console.Writeline("Completed");
-
-        return Redirect("https://github.com");
+        return Redirect(destinationUrl);
     }
 
 }

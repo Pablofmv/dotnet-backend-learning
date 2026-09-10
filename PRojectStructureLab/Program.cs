@@ -1,8 +1,14 @@
+using ProjectStructureLab.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // REGISTER
 
 builder.Services.AddControllers();
+
+// REGISTER SERVICES
+
+builder.Services.AddScoped<ILinkService, LinkService>();
 
 
 // BUILD
